@@ -1,4 +1,6 @@
-public class Main {
+package ru.staq.pft.sandbox;
+
+public class MyFirstProgram {
 
     public static void main(String[] args){
         System.out.println("Hello, World!");
