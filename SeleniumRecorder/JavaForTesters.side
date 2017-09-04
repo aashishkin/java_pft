@@ -1,0 +1,21 @@
+{
+  "id": "ba79df24-5b30-4261-aad9-97df9e3f6ce3",
+  "version": "2.0",
+  "name": "JavaForTesters",
+  "url": "http://192.168.1.240:8080/addressbook",
+  "tests": [{
+    "id": "4cabc870-7b5d-4ead-901c-ab9bbea1d76a",
+    "name": "Auth",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "cd1dcaf8-44bf-4b72-bb5f-47715e661ec6",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://192.168.1.240:8080/"],
+  "plugins": []
+}
