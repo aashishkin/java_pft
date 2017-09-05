@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationManager {
+    private String browser;
     protected WebDriver driver;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
@@ -18,16 +19,19 @@ public class ApplicationManager {
     JavascriptExecutor js;
     private Map<String, Object> vars;
 
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+    }
+
     public void init() {
         System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
         System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
         System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
-        String browser = BrowserType.OPERA_BLINK;
-        if (browser == BrowserType.FIREFOX) {
+        if (browser.equals(BrowserType.FIREFOX)) {
             driver = new FirefoxDriver();
-        } else if (browser == BrowserType.CHROME) {
+        } else if (browser.equals(BrowserType.CHROME)) {
             driver = new ChromeDriver();
-        } else if (browser == BrowserType.OPERA_BLINK){
+        } else if (browser.equals(BrowserType.OPERA_BLINK)){
             driver = new OperaDriver();
         }
 
