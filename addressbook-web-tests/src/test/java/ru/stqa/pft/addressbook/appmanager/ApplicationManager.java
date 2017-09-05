@@ -2,7 +2,10 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.BrowserType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +20,17 @@ public class ApplicationManager {
 
     public void init() {
         System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
-        driver = new FirefoxDriver();
+        System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
+        System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
+        String browser = BrowserType.OPERA_BLINK;
+        if (browser == BrowserType.FIREFOX) {
+            driver = new FirefoxDriver();
+        } else if (browser == BrowserType.CHROME) {
+            driver = new ChromeDriver();
+        } else if (browser == BrowserType.OPERA_BLINK){
+            driver = new OperaDriver();
+        }
+
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
         driver.get("http://192.168.1.240:8080/addressbook/");
