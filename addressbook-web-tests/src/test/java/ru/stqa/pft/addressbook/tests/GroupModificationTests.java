@@ -18,6 +18,9 @@ public class GroupModificationTests extends TestBase {
                 "— Вон, спросите у невестки, — кивнула я на Лику, переводя стрелки на другой объект. — Она теперь должна чувствовать нити судьбы, связывающие родственников.\n";
 
         app.getNavigationHelper().gotoGroupPage();
+        if(! app.getGroupHelper().isThereAGroup()) {
+            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        }
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModification();
         app.getGroupHelper().fillGroupForm(new GroupData("ВТБ Ф", "Header8", text));
@@ -28,6 +31,9 @@ public class GroupModificationTests extends TestBase {
     @Test
     public void testGroupModification1() {
         app.getNavigationHelper().gotoGroupPage();
+        if(! app.getGroupHelper().isThereAGroup()) {
+            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        }
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModification();
         app.getGroupHelper().fillGroupForm(new GroupData("ВТБ Ф", "Header8", "Footer8"));
