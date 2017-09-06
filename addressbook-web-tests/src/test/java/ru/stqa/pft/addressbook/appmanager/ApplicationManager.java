@@ -37,7 +37,7 @@ public class ApplicationManager {
             driver = new OperaDriver();
         }
 
-        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(2, TimeUnit.SECONDS);
 
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
