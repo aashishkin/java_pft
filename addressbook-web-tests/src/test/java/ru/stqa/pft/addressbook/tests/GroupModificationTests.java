@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTests extends TestBase {
@@ -27,26 +28,36 @@ public class GroupModificationTests extends TestBase {
         List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData("ВТБ Ф", "Header8", text));
+        GroupData group = new GroupData(before.get(before.size()-1).getId(), "ВТБ Ф", "Header8", text);
+        app.getGroupHelper().fillGroupForm(group);
         app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size());
+        before.remove(before.size() - 1);
+        before.add(group);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
     }
 
     @Test
     public void testGroupModification1() {
         app.getNavigationHelper().gotoGroupPage();
-        int before = app.getGroupHelper().getGroupCount();
         if(! app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().createGroup(new GroupData("test1", null, null));
         }
-        app.getGroupHelper().selectGroup(before - 1);
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData("ВТБ Ф", "Header8", "Footer8"));
+        GroupData group = new GroupData(before.get(before.size()-1).getId(), "ВТБ Ф", "Header8", "Footer8");
+        app.getGroupHelper().fillGroupForm(group);
         app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
-        int after = app.getGroupHelper().getGroupCount();
-        Assert.assertEquals(after, before);
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+
+        before.remove(before.size() - 1);
+        before.add(group);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
+        Assert.assertEquals(after.size(), before.size());
     }
 }
