@@ -11,6 +11,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 
+    // https://mvnrepository.com/artifact/org.hamcrest/java-hamcrest
+    testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+
+
 // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
