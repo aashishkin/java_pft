@@ -8,12 +8,14 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if(app.group().list().size() == 0) {
+        app.goTo().groupPage();
+        if(app.group().all().size() == 0) {
             app.group().create(new GroupData().withName("Тест 1"));
         }
     }
@@ -30,37 +32,31 @@ public class GroupModificationTests extends TestBase {
                 "\n" +
                 "— Вон, спросите у невестки, — кивнула я на Лику, переводя стрелки на другой объект. — Она теперь должна чувствовать нити судьбы, связывающие родственников.\n";
 
-        app.goTo().groupPage();
 
-        List<GroupData> before = app.group().list();
-        int index = before.size() - 1;
+
+        Set<GroupData> before = app.group().all();
+        GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData()
-                .withId(before.get(index).getId()).withName("ВТБ Ф").withHeader("Header8").withFooter(text);
-        app.group().modify(index, group);
-        List<GroupData> after = app.group().list();
+                .withId(modifiedGroup.getId()).withName("ВТБ Ф").withHeader("Header8").withFooter(text);
+        app.group().modify(group);
+        Set<GroupData> after = app.group().all();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(index);
+        before.remove(modifiedGroup);
         before.add(group);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
-    }
+        Assert.assertEquals(before, after);
+       }
 
     @Test
     public void testGroupModification1() {
-        app.goTo().groupPage();
-        List<GroupData> before = app.group().list();
-        int index = before.size() - 1;
+        Set<GroupData> before = app.group().all();
+        GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData()
-                .withId(before.get(index).getId()).withName("ВТБ Ф").withHeader("Header8").withFooter("Footer 8");
-        app.group().modify(index, group);
-        List<GroupData> after = app.group().list();
+                .withId(modifiedGroup.getId()).withName("ВТБ Ф").withHeader("Header8").withFooter("Footer 8");
+        app.group().modify(group);
+        Set<GroupData> after = app.group().all();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(index);
+        before.remove(modifiedGroup);
         before.add(group);
-
-        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());;
-        before.sort(byId);
-        after.sort(byId);
-        //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
         Assert.assertEquals(before, after);
 
 
