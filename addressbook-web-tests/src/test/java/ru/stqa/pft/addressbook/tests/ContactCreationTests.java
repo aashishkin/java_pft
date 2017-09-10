@@ -1,10 +1,18 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 public class ContactCreationTests extends TestBase {
+
+    @BeforeMethod
+    public void ensurePreconditions() {
+        app.goTo().groupPage();
+        app.group().create(new GroupData().withName("Категория 1"));
+    }
 
     @Test
     public void testContactCreation() {
