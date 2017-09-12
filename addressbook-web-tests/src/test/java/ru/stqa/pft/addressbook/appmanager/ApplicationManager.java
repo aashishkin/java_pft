@@ -37,8 +37,9 @@ public class ApplicationManager {
             driver = new OperaDriver();
         }
 
-        driver.manage().timeouts().setScriptTimeout(2, TimeUnit.SECONDS);
-
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
         driver.get("http://192.168.1.240:8080/addressbook/");
