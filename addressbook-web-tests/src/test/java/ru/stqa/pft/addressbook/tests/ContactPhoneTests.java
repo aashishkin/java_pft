@@ -10,6 +10,9 @@ public class ContactPhoneTests extends TestBase {
         app.goTo().gotoHomePage();
         ContactData contact = app.contact().all().iterator().next();
         ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+        System.out.println(contactInfoFromEditForm.getHomePhone());
+        System.out.println(contactInfoFromEditForm.getWorkPhone());
+        System.out.println(contactInfoFromEditForm.getMobile());
 
     }
 }

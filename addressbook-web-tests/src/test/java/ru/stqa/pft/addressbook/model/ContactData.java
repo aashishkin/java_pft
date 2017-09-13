@@ -26,13 +26,14 @@ public class ContactData {
         this.allPhones = allPhones;
     }
 
-    public ContactData(String firstName, String lastName, String address, String email, String mobile, String workPhone, String group) {
+    public ContactData(String firstName, String lastName, String address, String email, String mobile, String workPhone, String homePhone, String group) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.mobile = mobile;
         this.workPhone = workPhone;
+        this.homePhone = homePhone;
         this.group = group;
     }
 
@@ -85,7 +86,7 @@ public class ContactData {
     }
 
     public ContactData withId(int id) {
-        this.firstName = firstName;
+        this.id = id;
         return this;
     }
     public ContactData withFirstName(String firstName) {
