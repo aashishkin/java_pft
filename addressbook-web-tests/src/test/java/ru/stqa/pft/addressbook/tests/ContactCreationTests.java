@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.io.File;
+
 public class ContactCreationTests extends TestBase {
 
     @BeforeMethod
@@ -19,11 +21,22 @@ public class ContactCreationTests extends TestBase {
     app.goTo().gotoHomePage();
     int before = app.getContactHelper().getContactCount();
     app.getContactHelper().initContactCreation();
-    app.getContactHelper().fillContactForm(new ContactData("test_name", "test_surname", "Москва, Пресненская набережная, 10", "test@test.com", "+79202001234", "+74951230987", "+74957771234", "Категория 1"), true);
+    File photo = new File("src/test/resources/duck.jpg");
+    app.getContactHelper().fillContactForm(new ContactData().withFirstName("Тест1").withLastName("Тест2").withMobile("+79301234567").withHomePhone("+74953331212").withPhoto(photo).withGroup("Категория 1"), true);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().returnToHomePage();
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before + 1);
+}
+
+@Test(enabled=false)
+    public void testCurrentDir() {
+    File currentDir = new File(".");
+    System.out.println(currentDir.getAbsolutePath());
+    File photo = new File("src/test/resources/duck.jpg");
+    System.out.println(photo.getAbsolutePath());
+    System.out.println(photo.exists());
+
 }
 
 }
