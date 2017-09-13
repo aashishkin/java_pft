@@ -51,10 +51,10 @@ public class ContactHelper extends HelperBase {
            String address = element.findElement(By.xpath("td[4]")).getText();
            String allEmail = element.findElement(By.xpath("td[5]")).getText();
            String allPhones = element.findElement(By.xpath("td[6]")).getText();
-           String[] phones = allPhones.split("\n");
+
            contacts.add(new ContactData().withId(id).
                    withFirstName(firstName).withLastName(lastName).withAddress(address).withAllEmail(allEmail).
-                   withAllPhones(allPhones).withHomePhone(phones[0]).withMobile(phones[1]).withWorkPhone(phones[2]));
+                   withAllPhones(allPhones));
         }
         return contacts;
     }
