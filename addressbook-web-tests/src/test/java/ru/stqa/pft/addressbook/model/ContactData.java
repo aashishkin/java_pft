@@ -1,7 +1,9 @@
 package ru.stqa.pft.addressbook.model;
-import com.google.common.collect.ForwardingSet;
+
 
 public class ContactData {
+
+    private int id;
 
     private  String firstName;
     private  String lastName;
@@ -9,6 +11,8 @@ public class ContactData {
     private  String email;
     private  String mobile;
     private  String workPhone;
+
+    private  String homePhone;
     private  String group;
 
     private String allEmail;
@@ -34,6 +38,14 @@ public class ContactData {
 
     public ContactData() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
     }
 
     public String getFirstName() {
@@ -72,6 +84,10 @@ public class ContactData {
         return allPhones;
     }
 
+    public ContactData withId(int id) {
+        this.firstName = firstName;
+        return this;
+    }
     public ContactData withFirstName(String firstName) {
         this.firstName = firstName;
         return this;
@@ -99,6 +115,11 @@ public class ContactData {
 
     public ContactData withWorkPhone(String workPhone) {
         this.workPhone = workPhone;
+        return this;
+    }
+
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
         return this;
     }
 
