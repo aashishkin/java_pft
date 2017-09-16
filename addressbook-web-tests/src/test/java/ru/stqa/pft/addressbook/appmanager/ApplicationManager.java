@@ -7,8 +7,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
@@ -22,10 +27,14 @@ public class ApplicationManager {
     private Map<String, Object> vars;
 
     public ApplicationManager(String browser) {
+
         this.browser = browser;
     }
 
-    public void init() {
+    public void init() throws IOException {
+        Properties properties = new Properties();
+        String target = System.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
         System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
         System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
@@ -42,12 +51,13 @@ public class ApplicationManager {
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-        driver.get("http://192.168.1.240:8080/addressbook/");
+        driver.get(properties.getProperty("web.baseUrl"));
         sessionHelper = new SessionHelper(driver);
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         contactHelper = new ContactHelper(driver);
-        sessionHelper.login("admin", "secret");
+        sessionHelper.login(properties.getProperty("web.AdminLogin"),
+                properties.getProperty("web.AdminPassword"));
     }
 
     public void stop() {
