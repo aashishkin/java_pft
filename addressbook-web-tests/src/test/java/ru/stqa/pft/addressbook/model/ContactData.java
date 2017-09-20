@@ -1,35 +1,67 @@
 package ru.stqa.pft.addressbook.model;
 
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
-
+    @Id
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "firstname")
+    @Type(type = "string")
     private  String firstName;
+
+    @Column(name = "lastname")
+    @Type(type = "string")
     private  String lastName;
+
+    @Transient
     private  String address;
+
+    @Transient
     private  String email;
+
+    @Column(name = "mobile")
+    @Type(type = "text")
     private  String mobile;
+
+    @Column(name = "work")
+    @Type(type = "text")
     private  String workPhone;
 
+    @Column(name = "home")
+    @Type(type = "text")
     private  String homePhone;
+
+    @Transient
     private  String group;
 
+    @Transient
     private String allEmail;
+
+    @Transient
     private String allPhones;
 
-    private File photo;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
+
+
 
     public ContactData(String firstName, String lastName, String address, String allEmail, String allPhones) {
         this.firstName = firstName;
@@ -150,5 +182,14 @@ public class ContactData {
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

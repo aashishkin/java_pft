@@ -25,6 +25,7 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     JavascriptExecutor js;
     private Map<String, Object> vars;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
 
@@ -38,6 +39,7 @@ public class ApplicationManager {
         System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
         System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
         System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
+        dbHelper = new DbHelper();
         if (browser.equals(BrowserType.FIREFOX)) {
             driver = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
@@ -46,9 +48,9 @@ public class ApplicationManager {
             driver = new OperaDriver();
         }
 
-        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
         driver.get(properties.getProperty("web.baseUrl"));
@@ -58,6 +60,8 @@ public class ApplicationManager {
         contactHelper = new ContactHelper(driver);
         sessionHelper.login(properties.getProperty("web.AdminLogin"),
                 properties.getProperty("web.AdminPassword"));
+
+
     }
 
     public void stop() {
@@ -80,5 +84,9 @@ public class ApplicationManager {
 
     public ContactHelper getContactHelper() {
         return contactHelper;
+    }
+
+    public DbHelper db() {
+        return dbHelper;
     }
 }
