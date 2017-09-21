@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 
 import java.util.List;
@@ -50,7 +51,20 @@ public class HbConnectionTest {
         session.getTransaction().commit();
         session.close();
 
+    }
 
+
+    @Test
+    public void HbMaxId() {
+
+
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String result = session.createQuery( "select nextval(id) from GroupData" ).list().toString().replaceAll("[\\[\\]]", "");
+        System.out.println(Integer.parseInt(result));
+        session.getTransaction().commit();
+        session.close();
 
     }
 
