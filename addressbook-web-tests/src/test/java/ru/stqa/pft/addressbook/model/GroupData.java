@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @XStreamAlias("group")
 @Entity
 @Table(name = "group_list")
-public class GroupData {
+public class GroupData implements Comparable<GroupData> {
     @XStreamOmitField
     @Id
     @Column(name = "group_id")
@@ -99,4 +99,15 @@ public class GroupData {
         return footer;
     }
 
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public int compareTo(GroupData groupData) {
+        int id = ((GroupData) groupData).getId();
+        return this.id - id;
+
+    }
 }

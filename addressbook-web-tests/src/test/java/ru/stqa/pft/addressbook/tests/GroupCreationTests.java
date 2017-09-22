@@ -3,17 +3,13 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -62,24 +58,48 @@ public class GroupCreationTests extends TestBase {
 
     @Test(dataProvider = "validGroupsFromJson")
     public void testGroupCreation(GroupData group) {
+
         app.goTo().groupPage();
-        Groups before = app.group().all();
+        //Groups before = app.group().all();
+        Groups before = app.db().groups();
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size() + 1));
-        Groups after = app.group().all();
-        assertThat(after, equalTo(
-                before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+        //Groups after = app.group().all();
+
+        group.setId(app.db().getGroupMaxId());
+        before.add(group);
+//        System.out.println("Новая группа " + group);
+        Groups after = app.db().groups();
+
+        List<GroupData> beforeList = new ArrayList<GroupData>(before);
+        List<GroupData> afterList = new ArrayList<GroupData>(after);
+        Collections.sort(afterList);
+        Collections.sort(beforeList);
+//        System.out.println("After: \n" + afterList);
+//        System.out.println("Before: \n" + beforeList);
+        assertThat(afterList.toString(), equalTo((beforeList.toString())));
+
+//        System.out.println("Простое решение");
+//        before.retainAll(after);
+//        after.removeAll(before);
+//        System.out.println("similiar " + before);
+//        System.out.println("different " + after);
+        //assertThat(after, equalTo(
+        //        before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+
     }
 
 
     @Test
     public void testBadGroupCreation() {
         app.goTo().groupPage();
-        Groups before = app.group().all();
+        //Groups before = app.group().all();
+        Groups before = app.db().groups();
         GroupData group = new GroupData().withName("Тест 2'");
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size()));
-        Groups after = app.group().all();
+        //Groups after = app.group().all();
+        Groups after = app.db().groups();
         assertThat(after, equalTo(before));
     }
 }
