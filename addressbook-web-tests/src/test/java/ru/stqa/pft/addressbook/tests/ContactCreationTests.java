@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.File;
 
@@ -18,11 +19,15 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
+    Groups groups = app.db().groups();
+    File photo = new File("src/test/resources/duck.jpg");
+    ContactData newContact = new ContactData().withFirstName("Тест1").withLastName("Тест2").withMobile("+79301234567").withHomePhone("+74953331212").withPhoto(photo)
+            .inGroup(groups.iterator().next());
     app.goTo().gotoHomePage();
     int before = app.getContactHelper().getContactCount();
     app.getContactHelper().initContactCreation();
-    File photo = new File("src/test/resources/duck.jpg");
-    app.getContactHelper().fillContactForm(new ContactData().withFirstName("Тест1").withLastName("Тест2").withMobile("+79301234567").withHomePhone("+74953331212").withPhoto(photo), true);
+    app.getContactHelper().fillContactForm(newContact,true);
+
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().returnToHomePage();
     int after = app.getContactHelper().getContactCount();
