@@ -1,10 +1,10 @@
 package ru.stqa.pft.mantis.appmanager;
 
-import org.apache.http.impl.client.HttpClients;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
   private final Properties properties;
-  private WebDriver wd;
+  private WebDriver driver;
 
   private String browser;
   private RegistrationHelper registrationHelper;
@@ -32,11 +32,14 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+    System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
+    System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
+    System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
   }
 
   public void stop() {
-    if (wd != null) {
-      wd.quit();
+    if (driver != null) {
+      driver.quit();
     }
   }
 
@@ -63,18 +66,20 @@ public class ApplicationManager {
   }
 
   public WebDriver getDriver() {
-    if (wd == null) {
+    if (driver == null) {
       if (browser.equals(BrowserType.FIREFOX)) {
-        wd = new FirefoxDriver();
+        driver = new FirefoxDriver();
       } else if (browser.equals(BrowserType.CHROME)) {
-        wd = new ChromeDriver();
-      } else if (browser.equals(BrowserType.IE)) {
-        wd = new InternetExplorerDriver();
+        driver = new ChromeDriver();
+      } else if (browser.equals(BrowserType.OPERA_BLINK)){
+        driver = new OperaDriver();
       }
-      wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-      wd.get(properties.getProperty("web.baseUrl"));
+//      driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+//      driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+//      driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+      driver.get(properties.getProperty("web.baseUrl"));
     }
-    return wd;
+    return driver;
   }
 
   public MailHelper mail() {
@@ -84,12 +89,12 @@ public class ApplicationManager {
     return mailHelper;
   }
 
-  public JamesHelper james() {
-    if (jamesHelper == null) {
-      jamesHelper = new JamesHelper(this);
-    }
-    return jamesHelper;
-  }
+//  public JamesHelper james() {
+//    if (jamesHelper == null) {
+//      jamesHelper = new JamesHelper(this);
+//    }
+//    return jamesHelper;
+//  }
   
   public SoapHelper soap() {
     if (soapHelper == null) {
