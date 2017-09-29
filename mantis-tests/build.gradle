@@ -25,6 +25,14 @@ dependencies {
     // https://mvnrepository.com/artifact/org.subethamail/subethasmtp
     testCompile group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7'
 
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
+
+    compile 'ch.qos.logback:logback-classic:1.1.5'
+    compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.4'
+    compile 'biz.futureware.mantis:mantis-axis-soap-client:1.2.19'
+
+
 
 }
 

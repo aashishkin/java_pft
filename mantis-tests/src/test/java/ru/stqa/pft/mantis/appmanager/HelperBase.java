@@ -8,53 +8,51 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 
 public class HelperBase {
-    protected ApplicationManager app;
-    protected WebDriver driver;
 
+  protected ApplicationManager app;
+  protected WebDriver wd;
 
-    public HelperBase(ApplicationManager app) {
-        this.app = app;
-        this.driver = app.getDriver();
+  public HelperBase(ApplicationManager app) {
+    this.app = app;
+    this.wd = app.getDriver();
+  }
+
+  protected void click(By locator) {
+    wd.findElement(locator).click();
+  }
+
+  protected void type(By locator, String text) {
+    click(locator);
+    if (text != null) {
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (! text.equals(existingText)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
     }
+  }
 
-    protected void type(By locator, String text) {
-        click(locator);
-
-        if(text != null) {
-            String existingText = driver.findElement(locator).getAttribute("value");
-            if (! text.equals(existingText)) {
-                driver.findElement(locator).clear();
-                driver.findElement(locator).sendKeys(text);
-            }
-        }
+  protected void attach(By locator, File file) {
+    if (file != null) {
+      wd.findElement(locator).sendKeys(file.getAbsolutePath());
     }
+  }
 
-    protected void attach(By locator, File file) {
-        if(file != null) {
-            driver.findElement(locator).sendKeys(file.getAbsolutePath());
-        }
+  public boolean isAlertPresent() {
+    try {
+      wd.switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException e) {
+      return false;
     }
+  }
 
-    protected void click(By locator) {
-        driver.findElement(locator).click();
+  protected boolean isElementPresent(By locator) {
+    try {
+      wd.findElement(locator);
+      return true;
+    } catch (NoSuchElementException ex) {
+      return false;
     }
-
-    public boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
-    protected boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex){
-            return false;
-        }
-    }
+  }
 }
-
