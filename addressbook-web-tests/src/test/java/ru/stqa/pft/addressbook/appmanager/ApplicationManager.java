@@ -35,10 +35,19 @@ public class ApplicationManager {
     public void init() throws IOException {
         Properties properties = new Properties();
         String target = System.getProperty("target", "local");
+
+        File currentDir = new File(".");
+        System.out.println("Абсолютный путь ApplicationManager + " + currentDir.getAbsolutePath());
+
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-        System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
-        System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
-        System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
+//        System.setProperty("webdriver.gecko.driver", "/home/alex/IdeaProjects/java_pft/geckodriver");
+//        System.setProperty("webdriver.chrome.driver", "/home/alex/IdeaProjects/java_pft/chromedriver");
+//        System.setProperty("webdriver.opera.driver", "/home/alex/IdeaProjects/java_pft/operadriver");
+
+        System.setProperty("webdriver.gecko.driver", "../geckodriver.exe");
+        System.setProperty("webdriver.chrome.driver", "../chromedriver.exe");
+        System.setProperty("webdriver.opera.driver", "../operadriver.exe");
+
         dbHelper = new DbHelper();
         if (browser.equals(BrowserType.FIREFOX)) {
             driver = new FirefoxDriver();
