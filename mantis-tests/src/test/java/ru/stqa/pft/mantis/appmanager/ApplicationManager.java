@@ -89,12 +89,12 @@ public class ApplicationManager {
     return mailHelper;
   }
 
-//  public JamesHelper james() {
-//    if (jamesHelper == null) {
-//      jamesHelper = new JamesHelper(this);
-//    }
-//    return jamesHelper;
-//  }
+  public JamesHelper james() {
+    if (jamesHelper == null) {
+      jamesHelper = new JamesHelper(this);
+    }
+    return jamesHelper;
+  }
   
   public SoapHelper soap() {
     if (soapHelper == null) {
