@@ -50,7 +50,7 @@ public class TestBase {
         logger.info("Stop test " + m.getName() + " with parameters " + Arrays.asList(p));
     }
 
-    public void verifyGroupListInUi() {
+    public void verifyGroupListInUI() {
         if(Boolean.getBoolean("verifyUI")) {
             Groups dbGroups = app.db().groups();
             Groups uiGroups = app.group().all();
