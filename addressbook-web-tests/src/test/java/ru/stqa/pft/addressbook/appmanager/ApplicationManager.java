@@ -60,9 +60,9 @@ public class ApplicationManager {
             driver = new OperaDriver();
         }
 
-        driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+//        driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+//        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
         driver.get(properties.getProperty("web.baseUrl"));
