@@ -19,6 +19,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
+    private final Properties properties;
     private String browser;
     protected WebDriver driver;
     private SessionHelper sessionHelper;
@@ -30,8 +31,8 @@ public class ApplicationManager {
     private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
-
         this.browser = browser;
+        properties = new Properties();
     }
 
     public void init() throws IOException {
