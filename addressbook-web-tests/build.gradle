@@ -6,6 +6,10 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    agent
+}
+
 dependencies {
     // https://mvnrepository.com/artifact/org.testng/testng
     testCompile group: 'org.testng', name: 'testng', version: '7.1.0'
@@ -38,8 +42,16 @@ dependencies {
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.15.Final'
 
+    agent 'org.aspectj:aspectjweaver:1.8.0'
+    compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4'
+
 
 }
+
+
+
+
+
 
     task testGroups(type: Test) {
         useTestNG {
@@ -55,6 +67,10 @@ dependencies {
             systemProperty 'target', "${verifyUI}"
         }
     }
+
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
 
     task testContacts(type: Test) {
         useTestNG {
@@ -72,3 +88,7 @@ dependencies {
 
 
     }
+
+testContacts.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
